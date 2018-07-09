@@ -1,0 +1,58 @@
+<div class="container">
+  <h2>Review Scraper</h2>
+  <a id="scrape-btn" class="waves-effect waves-light btn">Scrape Now</a>
+  <a id="purge-btn" class="waves-effect waves-light btn">Purge</a>
+
+  <div class="row">
+    <div class="col s6">
+      <table>
+        <thead>
+          <tr>
+              <th>Video Game Reviews</th>
+              <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each games}}
+          <tr>
+            <td>
+              <a class="link" href="{{this.link}}" target="blank">
+                <span class="title">{{this.title}}</span>
+              </a>
+            </td>
+            <td>
+            {{this.published}}
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="col s6">
+      <table>
+        <thead>
+          <tr>
+              <th>Movie Reviews</th>
+              <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each movies}}
+          <tr>
+            <td>
+              <a href="{{this.link}}" target="blank">
+                <span class="title">{{this.title}}</span>
+              </a>
+            </td>
+            <td>
+            {{this.published}}
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>  
+</div>
+
+<script src="assets/js/index.js"></script>
