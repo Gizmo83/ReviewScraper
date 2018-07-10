@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var ReviewSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     type: {
         type: String,
@@ -19,7 +20,8 @@ var ReviewSchema = new Schema({
     },
     link: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     clicks: [
         {
