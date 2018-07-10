@@ -1,0 +1,13 @@
+.material-icons {
+    margin: 0px !important;
+}
+
+#sort {
+    float: right;
+}
+
+#search-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

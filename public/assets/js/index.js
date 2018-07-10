@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    $(".dropdown-trigger").dropdown();
+})
+
 // scrape button
 $("#scrape-btn").on("click", function() {
     $.get("/scrape", function(data) {
@@ -33,5 +37,20 @@ $(document).on("click", ".link", function() {
     })
 });
 
+// search button
+$("#submit").on("click", function() {
+
+    var searchTerm = $("#search").val();
+    $.ajax({
+        method: "POST",
+        url: "/search",
+        data: {
+            search: searchTerm
+        }
+    })
+    .then(function(response) {
+        window.location.href="/search"
+    })
+})
 
 

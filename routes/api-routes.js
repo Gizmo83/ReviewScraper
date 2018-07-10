@@ -98,7 +98,7 @@ module.exports = function (app) {
     })
 
     app.post("/update", function(req, res) {
-        console.log(req.body);
+        //console.log(req.body);
 
         var clickTime = moment();
 
@@ -107,32 +107,73 @@ module.exports = function (app) {
         database.Review.findOneAndUpdate({link: req.body.link}, {$push: {clicks: clickTime}})
         .then(function(dbreview){
             console.log(dbreview)
+            res.end();
         })
         .catch(function(err) {
             res.json(err);
         });
     });
 
-    app.get("/:desc", function(req, res) {
-        database.Review.find({}).sort({published: -1})
-        .then(function(dbReview) {
-            //console.log(dbReview);
-            dbReviews = dbReview;
-            var games = [];
-            var movies = [];
+    app.get("/sort/:order", function(req, res) {
 
-            for (var i=0; i<dbReview.length; i++) {
-                if(dbReview[i].type === "game") {
-                    games.push(dbReview[i]);
-                } else {
-                    movies.push(dbReview[i]);
+        var sortBy = req.params.order;
+        console.log(sortBy)
+        switch(sortBy) {
+            case "alphaup":
+                sort({title: -1})
+                break;
+            
+            case "alphadown":
+                sort({title: 1})
+                break;
+            
+            case "new":
+                sort({published: -1})
+                break;
+            
+            case "old":
+                sort({published: 1})
+                break;
+        }
+
+        function sort(condition) {
+            database.Review.find({}).sort(condition)
+            .then(function(dbReview) {
+                //console.log(dbReview);
+                dbReviews = dbReview;
+                var games = [];
+                var movies = [];
+    
+                for (var i=0; i<dbReview.length; i++) {
+                    if(dbReview[i].type === "game") {
+                        games.push(dbReview[i]);
+                    } else {
+                        movies.push(dbReview[i]);
+                    }
                 }
-            }
-
-            res.render("index", { games, movies });
-        })
-        .catch(function(err) {
-            res.json(err);
-        });
+    
+                res.render("index", { games, movies });
+            })
+            .catch(function(err) {
+                res.json(err);
+            });
+        };
     });
+
+    var searchResult;
+
+    app.post("/search", function(req, res) {
+        var searchTerm = req.body.search;
+        console.log(searchTerm);
+        database.Review.find({title: {$regex: new RegExp('.*' + searchTerm.toLowerCase() + '.*', 'i')}, title: {$regex: new RegExp('.*' + searchTerm.toUpperCase() + '.*','i')}})
+        .then(function(response) {
+            console.log(response)
+            searchResult = response;
+            res.end();
+        })
+    })
+
+    app.get("/search", function(req, res) {
+        res.render("search", {searchResult})
+    })
 }

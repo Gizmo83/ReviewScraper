@@ -1,7 +1,25 @@
 <div class="container">
   <h2>Review Scraper</h2>
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="search" type="text"></input>
+      <label for="search">Search</label>
+      <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+    </div>
+  </div>
   <a id="scrape-btn" class="waves-effect waves-light btn">Scrape Now</a>
   <a id="purge-btn" class="waves-effect waves-light btn">Purge</a>
+    <!-- Dropdown Trigger -->
+  <a class='dropdown-trigger btn' style="width: 150px; float: right;" href='#' data-target='dropdown1'>Sort By<i id="sort" class="material-icons">arrow_drop_down</i></a>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="/sort/alphadown">Alphabetical<i class="material-icons">arrow_drop_down</i></a></li>
+    <li><a href="/sort/alphaup">Alphabetical<i class="material-icons">arrow_drop_up</i></a></li>
+    <li class="divider" tabindex="-1"></li>
+    <li><a href="/sort/new">Newest</a></li>
+    <li><a href="/sort/old">Oldest</a></li>
+  </ul>
 
   <div class="row">
     <div class="col s6">
@@ -9,7 +27,7 @@
         <thead>
           <tr>
               <th>Video Game Reviews</th>
-              <th style="width: 105px;">Date<i class="small material-icons">arrow_drop_up</i><i class="small material-icons">arrow_drop_down</i></th>
+              <th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -33,21 +51,14 @@
         <thead>
           <tr>
               <th>Movie Reviews</th>
-              <th style="width: 105px;">Date
-                <a href="/">
-                  <i class="small material-icons">arrow_drop_up</i>
-                </a>
-                <a href="/dsc">
-                  <i class="small material-icons">arrow_drop_down</i>
-                </a>
-              </th>
+              <th>Date</th>
           </tr>
         </thead>
         <tbody>
         {{#each movies}}
           <tr>
             <td>
-              <a href="{{this.link}}" target="blank">
+              <a class="link" href="{{this.link}}" target="blank">
                 <span class="title">{{this.title}}</span>
               </a>
             </td>
@@ -62,4 +73,4 @@
   </div>  
 </div>
 
-<script src="assets/js/index.js"></script>
+<script src="/assets/js/index.js"></script>
